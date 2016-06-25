@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Error handling
+function OwnError()
+{
+	echo -e "[ `date` ] $(tput setaf 1)$@$(tput sgr0)"
+	exit $2
+}
+
+
+
+echo "Setup Protocol Buffers, Please wait..."
+cd /opt \
+&& cd protobuf \
+&& ./autogen.sh \
+&& ./configure \
+&& make \
+&& make install \
+|| OwnError "Unable to Setup Protocol Buffers, exit status = " $?
+
+echo "Installing STF, Please wait..."
+npm install -g stf \
+|| OwnError "Unable to Installing STF, exit status = " $?
